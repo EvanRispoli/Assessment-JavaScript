@@ -1,0 +1,76 @@
+
+
+
+body {
+  margin: 0;
+}
+.container{
+  max-width:35rem;
+  max-height: 35rem;
+}
+
+#tabuleiro img {
+  margin: 20px;
+  cursor: pointer;
+  border: thin solid black;
+  width:80px;
+  height: 80px;
+  border-radius: 10px;
+}
+
+img:hover {
+  transform: scale(1.05);
+}
+
+nav {
+  display: flex;
+	justify-content: center;
+  border-bottom: 1px solid #81d6e3;
+  box-shadow: 1px 0px 10px 3px #cabac8;
+  z-index: 10;
+}
+
+ #rodape {
+  text-align: center;
+}
+
+bottom {
+  position: fixed;
+  padding: 5px;
+  background: #000;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+	justify-content: center;
+}
+
+#tabuleiro {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+  padding: 5px;
+  perspective: 1000px;
+}
+.col-3.carta-memoria{
+  transform-style: preserve-3d;
+  transition: transform .5s;
+
+}
+.carta{
+  
+
+}
+.carta.virada{
+  transform: rotateY(180deg);
+}
+
+#timer{
+  text-align: center;
+  font-size: 2rem;
+  color: aliceblue;
+  background-color:orange;
+  margin-right: 20rem;
+  margin-left: 20rem;
+  border-radius: 10px;
+}
