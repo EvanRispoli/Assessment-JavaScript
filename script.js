@@ -26,6 +26,12 @@
         imagem.style.opacity = "0.5";
         coluna.appendChild(imagem);
         }
+        //Insere aributo Valor e atribui um id pra cada imagem
+        let imagens = document.querySelectorAll(".carta");
+        imagens.forEach((img, i) => {
+          img.setAttribute("data-valor", i);
+          img.setAttribute("id", `i${i}`);
+        });
       }
 
     },
