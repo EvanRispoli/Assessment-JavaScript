@@ -43,14 +43,13 @@
       }
 	  this.buscaImagens();
     },
-
     
     imagensSrc: [],
     /*Faz a busca das imagens na api da PicSum e armazena os id's das imagens 2 vezes em uma lista*/
     buscaImagens: function() {
       fetch(this.lista).then(resposta => resposta.json())
-      .then(listaIMagens => {
-        for (imagem of listaIMagens) {
+      .then(listaImagens => {
+        for (imagem of listaImagens) {
           for (let i = 0; i < 2; i++) {
             this.imagensSrc.push(imagem.download_url);
           }
@@ -59,6 +58,16 @@
       });
     return this.imagensSrc;
     },
+    //Embaralha os endereços na lista imagensSrc 
+    embaralhaCartas: function() {
+      for (let i = 0; i < this.imagensSrc.length; i++) {
+        let p = Math.floor(Math.random() * this.imagensSrc.length);
+        let aux = this.imagensSrc[p];
+        this.imagensSrc[p] = this.imagensSrc[i];
+        this.imagensSrc[i] = aux
+      }
+      console.log(this.imagensSrc)
+    }, 
 
 	
   };
