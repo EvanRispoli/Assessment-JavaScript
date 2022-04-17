@@ -1,6 +1,6 @@
 (() => {
   let app = {
-    //Criando atributos pra facilitar a codificacao
+    //Criando atributos pra facilitar a codificação
     tabuleiro: document.querySelector("#tabuleiro"),
 
     lista: "https://picsum.photos/v2/list?page=2&limit=8",
@@ -30,10 +30,9 @@
       this.criaImagens();
     },
 
-    /* Cria 1 imagem para cada div class="col-3". As imagens possuem class="carta" 
-e para cada uma delas foi atribuida um data-valor=0. */
+    /* Cria 1 imagem para cada div class="col-3". As imagens possuem class="carta" e para cada uma delas foi atribuída um data-valor=0. */
 
-    criaImagens: function() {
+    criaImagens:  function() {
       var colunas = document.querySelectorAll(".col-3");
       for (let i = 0; i < colunas.length; i++) {
         let imagem = document.createElement("img");
@@ -42,24 +41,25 @@ e para cada uma delas foi atribuida um data-valor=0. */
         imagem.setAttribute("data-valor", 0);
         colunas[i].appendChild(imagem);
       }
-	  this.buscaIMagens();
+	  this.buscaImagens();
     },
 
-    /*Faz a busca das imagens na api da PicSum 
-e armazena os id's das imagens 2 vezes em uma lista*/
-    buscaIMagens: function() {
-      var imagensId = [];
-      fetch(this.lista).then(resposta => resposta.json()).then(listaIMagens => {
+    
+    imagensSrc: [],
+    /*Faz a busca das imagens na api da PicSum e armazena os id's das imagens 2 vezes em uma lista*/
+    buscaImagens: function() {
+      fetch(this.lista).then(resposta => resposta.json())
+      .then(listaIMagens => {
         for (imagem of listaIMagens) {
           for (let i = 0; i < 2; i++) {
-            imagensId.push(imagem.id);
+            this.imagensSrc.push(imagem.download_url);
           }
         }
+        this.embaralhaCartas();
       });
-	  console.log(imagensId)
+    return this.imagensSrc;
     },
 
-    iniciaJogo: function() {},
 	
   };
   onload = () => {
