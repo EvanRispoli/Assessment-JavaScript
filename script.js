@@ -1,5 +1,6 @@
 (() => {
   let app = {
+    jogoIniciado: false,
     iniciaJogo: function() {
       //Criando atributos pra facilitar a codificação
 
@@ -9,8 +10,12 @@
       let fundo = `https://picsum.photos/id/125/80?grayscale`;
       let tamanhoImagem = 80;
       let imagensId = [];
-
-      criaLinhas();
+      if (!this.jogoIniciado) {
+        criaLinhas();
+        this.jogoIniciado = true;
+      }else{
+        buscaImagens();
+      }
       // Cria 4 divs com class= "row"
       function criaLinhas() {
         console.log("inicio cria linhas");
@@ -109,12 +114,10 @@
       const cartas = document.querySelectorAll(".col-3 img");
       let cliqueTravado = false;
       let temCartaVirada = false;
-      let posicaoCartaVirada = -1;
-      let pontos = 0;
       let primeiraCarta = null;
       let segundaCarta = null;
-      let valorCartaVirada = 0;
-      // Vira uma carta
+      let pontos = 0;
+      // Vira uma carta - muda o src da carta e adiciona "virada" a classe da imagem.
       function viraCarta() {
         if (cliqueTravado) return;
         if (this === primeiraCarta) return;
@@ -131,41 +134,42 @@
           return;
         }
         // Segundo click
-        segundaCarta= this
+        segundaCarta = this;
 
-        verificaCombinacao();      
+        verificaCombinacao();
       }
-      function verificaCombinacao(){
-        let combina = primeiraCarta.dataset.valor === segundaCarta.dataset.valor;
+      function verificaCombinacao() {
+        let combina =
+          primeiraCarta.dataset.valor === segundaCarta.dataset.valor;
         combina ? desabilitaCartas() : desviraCarta();
       }
 
       function desabilitaCartas() {
-        primeiraCarta.removeEventListener('click', viraCarta);
-        segundaCarta.removeEventListener('click', viraCarta);
+        primeiraCarta.removeEventListener("click", viraCarta);
+        segundaCarta.removeEventListener("click", viraCarta);
+        pontos++
+        resetaTabuleiro();
       }
 
-      function desviraCarta(){
+      function desviraCarta() {
         cliqueTravado = true;
 
-        setTimeout(()=>{
-          primeiraCarta.src = `${imagemEspecifica}${primeiraCarta.getAttribute("data-valor")}/${tamanhoImagem}`;
-          primeiraCarta.classList.remove('virada');
-          
-          segundaCarta.classList.remove('virada');
-
+        setTimeout(() => {
+          primeiraCarta.classList.remove("virada");
+          primeiraCarta.src = fundo;
+          segundaCarta.classList.remove("virada");
+          segundaCarta.src = fundo;
           resetaTabuleiro();
-        },2000)
+        }, 2000);
       }
-      function resetaTabuleiro(){
+      function resetaTabuleiro() {
         [temCartaVirada, cliqueTravado] = [false, false];
-  [primeiraCarta, segundaCarta] = [null, null];
+        [primeiraCarta, segundaCarta] = [null, null];
       }
 
       cartas.forEach(carta => carta.addEventListener("click", viraCarta));
     }
   };
-  
 
   onload = () => {
     //app.iniciaJogo();
